@@ -1092,3 +1092,31 @@ section {
 
  }
 
+
+ .digital-text {
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+  color: #222;
+  text-align: center;
+  line-height: 1.6;
+  margin: 20px;
+}
+
+.digital-icon {
+  color: #00eaff;
+  margin-right: 8px;
+  animation: sparkleGlow 1.5s infinite alternate;
+}
+
+@keyframes sparkleGlow {
+  0% {
+    text-shadow: 0 0 5px #00eaff, 0 0 10px #00eaff, 0 0 20px #00eaff;
+    transform: scale(1);
+  }
+  100% {
+    text-shadow: 0 0 15px #00ffe0, 0 0 25px #00ffe0, 0 0 40px #00ffe0;
+    transform: scale(1.3);
+  }
+}
+
+
