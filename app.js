@@ -40,17 +40,7 @@
 
     popup.innerHTML = `
         <div style="display:flex;align-items:center;gap:10px;">
-            <div style="
-                width:34px;
-                height:34px;
-                background:linear-gradient(135deg, #00ffd0, #0077ff);
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                border-radius:50%;
-                box-shadow:0 0 10px rgba(0,255,204,0.5);
-                font-size:18px;
-            ">🔒</div>
+            <div style="font-size:30px;animation: pulse 1.5s infinite;">🔒</div>
             <div style="display:flex;flex-direction:column;">
                 <strong id="popup-title" style="font-size:16px;">Access Restricted</strong>
                 <span id="popup-text" style="font-size:13px;opacity:0.85;">Action not allowed</span>
@@ -115,8 +105,9 @@
                     font-family:'Poppins',sans-serif;
                     flex-direction:column;
                     text-align:center;
+                    animation: fadeIn 1s ease;
                 ">
-                    <div style="font-size:60px;">🔒</div>
+                    <div style="font-size:60px;animation: pulse 2s infinite;">🔒</div>
                     <h2>Developer Tools Access Blocked</h2>
                     <p>Please close DevTools to continue browsing securely.</p>
                 </div>
@@ -133,6 +124,14 @@
         }
         @keyframes fadeOut {
             to { opacity: 0; transform: translateY(-20px); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     `;
     document.head.appendChild(style);
