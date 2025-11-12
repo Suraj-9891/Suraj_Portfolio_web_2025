@@ -13,37 +13,61 @@
         document.body.classList.toggle("light-mode");
     });
 
-    // ======= New Security + Popup Features =======
+    // ======= New Security + Modern Popup Features =======
 
-    // 🔐 Create Popup Element (once)
+    // 🔐 Create Modern Popup Element (once)
     const popup = document.createElement("div");
     popup.id = "security-popup";
     popup.style.cssText = `
         position: fixed;
-        top: 20px;
-        right: 20px;
-        background: rgba(0,0,0,0.85);
+        top: 30px;
+        right: 30px;
+        backdrop-filter: blur(10px);
+        background: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(0, 255, 204, 0.3);
         color: #00ffcc;
-        padding: 14px 18px;
-        border-radius: 10px;
+        padding: 16px 22px;
+        border-radius: 14px;
         font-family: 'Poppins', sans-serif;
         font-size: 15px;
         display: none;
         align-items: center;
-        gap: 8px;
-        box-shadow: 0 0 12px rgba(0,255,200,0.4);
+        gap: 12px;
+        box-shadow: 0 0 20px rgba(0, 255, 200, 0.4);
         z-index: 99999;
-        animation: fadeInOut 2.5s ease;
+        animation: slideFade 0.5s ease, fadeOut 2.5s ease 2s forwards;
     `;
-    popup.innerHTML = `<span style="font-size:18px;">🔒</span><span id="popup-text">Access Restricted</span>`;
+
+    popup.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;">
+            <div style="
+                width:34px;
+                height:34px;
+                background:linear-gradient(135deg, #00ffd0, #0077ff);
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                border-radius:50%;
+                box-shadow:0 0 10px rgba(0,255,204,0.5);
+                font-size:18px;
+            ">🔒</div>
+            <div style="display:flex;flex-direction:column;">
+                <strong id="popup-title" style="font-size:16px;">Access Restricted</strong>
+                <span id="popup-text" style="font-size:13px;opacity:0.85;">Action not allowed</span>
+            </div>
+        </div>
+    `;
     document.body.appendChild(popup);
 
     // 🔔 Popup Show Function
     function showPopup(message) {
         const textEl = document.getElementById("popup-text");
+        const titleEl = document.getElementById("popup-title");
+        titleEl.textContent = " Security Alert";
         textEl.textContent = message;
         popup.style.display = "flex";
-        setTimeout(() => { popup.style.display = "none"; }, 2500);
+        popup.style.opacity = "1";
+        setTimeout(() => { popup.style.display = "none"; }, 2800);
     }
 
     // 🔒 Disable Right Click
@@ -58,9 +82,17 @@
         showPopup("Double Click Disabled!");
     });
 
-    // 🔒 Disable F12 and Ctrl+U keys
+    // 🔒 Disable F12, Ctrl+U, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
     document.addEventListener("keydown", (e) => {
-        if (e.key === "F12" || (e.ctrlKey && e.key.toLowerCase() === "u")) {
+        if (
+            e.key === "F12" ||
+            (e.ctrlKey && e.key.toLowerCase() === "u") ||
+            (e.ctrlKey && e.shiftKey && (
+                e.key.toLowerCase() === "i" ||
+                e.key.toLowerCase() === "j" ||
+                e.key.toLowerCase() === "c"
+            ))
+        ) {
             e.preventDefault();
             showPopup("Access Denied!");
         }
@@ -84,21 +116,23 @@
                     flex-direction:column;
                     text-align:center;
                 ">
-                    <div style="font-size:50px;">🔒</div>
+                    <div style="font-size:60px;">🔒</div>
                     <h2>Developer Tools Access Blocked</h2>
-                    <p>Please close the DevTools to continue browsing securely.</p>
+                    <p>Please close DevTools to continue browsing securely.</p>
                 </div>
             `;
         }
     }, 1000);
 
-    // ======= CSS Animation for popup =======
+    // ======= Modern CSS Animations for popup =======
     const style = document.createElement("style");
     style.textContent = `
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateY(-10px); }
-            10%, 90% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-10px); }
+        @keyframes slideFade {
+            0% { opacity: 0; transform: translateY(-20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; transform: translateY(-20px); }
         }
     `;
     document.head.appendChild(style);
